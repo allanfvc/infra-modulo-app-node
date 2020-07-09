@@ -10,7 +10,7 @@ module "db_instance" {
   ami = var.ami["sa-east-1"]
   tipo_instancia = var.db_instance_type
   security_groups_ids = [aws_security_group.allow_ssh.id, aws_security_group.web_egress.id, aws_security_group.allow_postgresql.id]
-  user_data = templatefile("./scripts/provisioning_db.sh.tpl", { db_name = var.db_name, db_user = var.db_user, db_password = var.db_password})
+  user_data = templatefile("${path.module}/scripts/provisioning_db.sh.tpl", { db_name = var.db_name, db_user = var.db_user, db_password = var.db_password})
   tags = {
     Name = "db"
   }
@@ -21,7 +21,7 @@ module "app_instance" {
   ami = var.ami[var.region]
   tipo_instancia = var.app_instance_type
   security_groups_ids = [aws_security_group.allow_ssh.id, aws_security_group.web_egress.id, aws_security_group.allow_http.id]
-  user_data = templatefile("./scripts/provisioning_web.sh.tpl", { db_name = var.db_name, db_user = var.db_user, db_password = var.db_password})
+  user_data = templatefile("${path.module}/scripts/provisioning_app.sh.tpl", { db_name = var.db_name, db_user = var.db_user, db_password = var.db_password})
   tags = {
     Name = "app"
   }
