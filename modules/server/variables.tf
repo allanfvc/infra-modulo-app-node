@@ -24,3 +24,8 @@ variable "tags" {
     type = map
     description = "Tags a serem aplicadas na instância"
 }
+
+variable "subnet_id" {
+  type = string
+  description = "ID da subrede em que a instância será criada"
+}

@@ -5,4 +5,5 @@ resource "aws_instance" "server" {
     vpc_security_group_ids = var.security_groups_ids
     tags = var.tags
     user_data = var.user_data
+    subnet_id = var.subnet_id
 }

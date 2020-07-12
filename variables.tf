@@ -1,9 +1,19 @@
+/*
+## Provider variables
+*/
 variable "ami" {
-    type = map
-    default = {
-        "us-east-2" = "ami-07c1207a9d40bc3bd"
-        "sa-east-1" = "ami-0faf2c48fc9c8f966"
-    }
+  type = map
+  default = {
+      "us-east-2" = "ami-07c1207a9d40bc3bd"
+      "sa-east-1" = "ami-0faf2c48fc9c8f966"
+  }
+}
+
+variable "nat_ami" {
+  type = map
+  default = {
+    "sa-east-1" = "ami-00adef0c54d8d2f05"
+  }
 }
 
 variable "region" {
@@ -11,6 +21,9 @@ variable "region" {
   default = "sa-east-1"
 }
 
+/*
+## Project variables
+*/
 variable "project_name" {
   type = string
 }
@@ -35,4 +48,5 @@ variable "app_instance_type" {
 }
 variable "app_src_dir" {
   type = string
+  description = "Caminho para a aplicacao node"
 }

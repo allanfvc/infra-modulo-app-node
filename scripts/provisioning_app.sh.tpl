@@ -4,7 +4,10 @@
 export HOME=/root
 cd /tmp
 apt-get update && apt-get install -y python ansible unzip
-wget https://ansible-config-allanfvc.s3.amazonaws.com/ansible/provisioning.zip
+wget https://allanfvc.s3.amazonaws.com/ansible/provisioning.zip
 unzip provisioning.zip -d provisioning
 cd /tmp/provisioning
-ansible-playbook -i hosts_app provisioning.yml --extra-vars "db_name=${db_name} db_user=${db_user} db_password=${db_password}"
+ansible-playbook -i hosts_app provisioning.yml --extra-vars "db_name=${db_name} db_user=${db_user} db_password=${db_password} db_ip_addr=${db_ip_addr}"
+cd /www/app
+npm install
+npm start
