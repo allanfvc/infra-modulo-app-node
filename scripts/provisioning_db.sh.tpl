@@ -7,4 +7,4 @@ apt-get update && apt-get install -y python ansible unzip
 wget https://allanfvc.s3.amazonaws.com/ansible/provisioning.zip
 unzip provisioning.zip -d provisioning
 cd /tmp/provisioning
-ansible-playbook -i hosts_db provisioning.yml --extra-vars "db_name=${db_name} db_user=${db_user} db_password=${db_password}"
+ansible-playbook -i hosts_db provisioning.yml --extra-vars "db_name=${db_name} db_user=${db_user} db_password=${db_password} app_network=${app_network}"

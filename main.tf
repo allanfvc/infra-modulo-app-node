@@ -27,7 +27,7 @@ module "db_instance" {
   tipo_instancia = var.db_instance_type
   subnet_id = aws_subnet.private_subnet_1a.id
   security_groups_ids = [aws_security_group.allow_ssh.id, aws_security_group.web_egress.id, aws_security_group.allow_postgresql.id]
-  user_data = templatefile("${path.module}/scripts/provisioning_db.sh.tpl", { db_name = var.db_name, db_user = var.db_user, db_password = var.db_password})
+  user_data = templatefile("${path.module}/scripts/provisioning_db.sh.tpl", { db_name = var.db_name, db_user = var.db_user, db_password = var.db_password, app_network="10.0.1.0/24"})
   tags = {
     Name = "db"
   }
