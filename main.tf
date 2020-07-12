@@ -15,7 +15,6 @@ resource "aws_s3_bucket_object" "upload" {
   bucket = "allanfvc"
   key    = "files/app.zip"
   source = "${path.module}/files/app.zip"
-  acl = "public-read"
   tags = {
       Name = "Aula Terraform"
   }
