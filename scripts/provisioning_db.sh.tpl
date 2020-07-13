@@ -3,8 +3,9 @@
 # Ver https://github.com/ansible/ansible/issues/31617#issuecomment-337029203
 export HOME=/root
 cd /tmp
-apt-get update && apt-get install -y python ansible unzip
-wget https://allanfvc.s3.amazonaws.com/ansible/provisioning.zip
+apt-get update && apt-get install -y python ansible unzip awscli
+chmod 400 /home/ubuntu/.ssh/id_rsa
+aws s3 cp s3://allanfvc/ansible/provisioning.zip provisioning.zip
 unzip provisioning.zip -d provisioning
 cd /tmp/provisioning
-ansible-playbook -i hosts_db provisioning.yml --extra-vars "db_name=${db_name} db_user=${db_user} db_password=${db_password} app_network=${app_network}"
+ansible-playbook -i hosts_db main.yml --extra-vars "db_name=${db_name} db_user=${db_user} db_password=${db_password} app_network=${app_network}"

@@ -6,4 +6,5 @@ resource "aws_instance" "server" {
     tags = var.tags
     user_data = var.user_data
     subnet_id = var.subnet_id
+    iam_instance_profile = var.inst_profile
 }

@@ -8,6 +8,7 @@ resource "aws_vpc" "app" {
 	tags = {
 		Name = "app"
 	}
+  depends_on = [aws_s3_bucket_object.upload]
 }
 
 resource "aws_internet_gateway" "app_igw" {
@@ -25,7 +26,7 @@ resource "aws_subnet" "public_subnet_1a"{
 	tags = {
 		Name = "public_subnet_1a"
 	}
-	
+	depends_on = [aws_vpc.app]
 }
 
 resource "aws_subnet" "private_subnet_1a"{
@@ -36,6 +37,7 @@ resource "aws_subnet" "private_subnet_1a"{
 	tags = {
 		Name = "private_subnet_1a"
 	}
+  depends_on = [aws_vpc.app]
 }
 
 resource "aws_route_table" "app_public_route"{
@@ -44,6 +46,7 @@ resource "aws_route_table" "app_public_route"{
 		cidr_block = "0.0.0.0/0"
 		gateway_id = aws_internet_gateway.app_igw.id
 	}
+  depends_on = [aws_internet_gateway.app_igw]
 	tags = {
 		Name = "app_public_route"
 	}
@@ -52,6 +55,7 @@ resource "aws_route_table" "app_public_route"{
 resource "aws_route_table_association" "apr_public_subnet_1a" {
 	subnet_id 		= aws_subnet.public_subnet_1a.id
 	route_table_id 		= aws_route_table.app_public_route.id
+  depends_on = [aws_route_table.app_public_route]
 }
 
 resource "aws_eip" "nat" {
@@ -61,7 +65,7 @@ resource "aws_eip" "nat" {
 resource "aws_nat_gateway" "nat_gw" {
 	allocation_id 	= aws_eip.nat.id
 	subnet_id	= aws_subnet.public_subnet_1a.id
-	depends_on  	= [aws_internet_gateway.app_igw]
+	depends_on  	= [aws_internet_gateway.app_igw, aws_eip.nat]
 }
 
 resource "aws_route_table" "nat_private_route" {
@@ -70,7 +74,7 @@ resource "aws_route_table" "nat_private_route" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat_gw.id
   }
-
+  depends_on = [aws_nat_gateway.nat_gw]
   tags = {
     Name = "nat_private_route"
   }

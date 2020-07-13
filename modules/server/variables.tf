@@ -29,3 +29,9 @@ variable "subnet_id" {
   type = string
   description = "ID da subrede em que a instância será criada"
 }
+
+variable "inst_profile" {
+  type = string
+  description = "profile da instancia"
+  default = "gcs_role"
+}
